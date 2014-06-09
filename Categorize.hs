@@ -1,4 +1,4 @@
-module Categorize (bestCategories, splitWords) where
+module Categorize (bestCategories, splitWords, bigram) where
 
 import qualified Data.Map as M
 import Data.Char (toLower)
