@@ -1,21 +1,12 @@
 module Categorize (bestCategories, splitWords, bigram) where
 
 import qualified Data.Map as M
-import Data.Char (toLower)
 import Data.List (sortBy)
 
 import Category1Gram (onegrams)
 import Category2Gram (twograms)
 
-splitWords :: String -> [String]
-splitWords = words . map (\c -> if elem c ".,;:!\n\t\"" then ' ' else toLower c)
-
-bigram :: [a] -> [[a]]
-bigram [] = []
-bigram [_] = []
-bigram xs = take 2 xs : bigram (tail xs)
-
-bigram_s xs = [ (a !! 0) ++ " " ++ (a !! 1) | a <- bigram xs] 
+import Utils (splitWords, bigram, bigram_s)
 
 catnames1 = map fst onegrams
 catnames2 = map fst twograms
