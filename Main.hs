@@ -9,6 +9,8 @@ import qualified Data.Text as T
 import Text.Read (readMaybe)
 import Data.Maybe (fromMaybe)
 
+import Utils (splitWordsKeepCase)
+
 import Categorize
 import Entities
 
@@ -34,6 +36,7 @@ getHomeR = defaultLayout $ do
   setTitle "Haskell Categorization Demo"
   categories <- lookupSession "categories"
   humanNames <- lookupSession "humanNames"
+  countryNames <- lookupSession "countryNames"
   deleteSession "categories"
   deleteSession "humanNames"
   toWidget [lucius|
@@ -52,6 +55,8 @@ getHomeR = defaultLayout $ do
      <p>#{fromMaybe "" categories}
      <h4>Human names found in text:
      <p>#{fromMaybe "" humanNames}
+     <h4>Country names found in text:
+     <p>#{fromMaybe "" countryNames}
      <br>
      <br>
      <div>
@@ -70,6 +75,7 @@ postHomeR = do
     --  "Assigned tags from combined 1gram and 2gram analysis: " ++ (show $ bestCategories $ splitWords $ T.unpack name)
     setSession "categories" $ T.pack $ (show $ bestCategories $ splitWords $ T.unpack name)
     setSession "humanNames" $ T.pack $ (show $ humanNames_s $ T.unpack name)
+    setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ T.unpack name)
     redirectUltDest HomeR
     
 main :: IO ()

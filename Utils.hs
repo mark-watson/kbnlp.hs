@@ -1,4 +1,4 @@
-module Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram) where
+module Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s) where
 
 import Data.Char (toLower)
 
@@ -20,4 +20,6 @@ trigram [] = []
 trigram [_] = []
 trigram [_,_] = []
 trigram xs = take 3 xs : trigram (tail xs)
+
+trigram_s xs = [ (a !! 0) ++ " " ++ (a !! 1) ++ " " ++ (a !! 2) | a <- trigram xs] 
 
