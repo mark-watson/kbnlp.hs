@@ -37,8 +37,11 @@ getHomeR = defaultLayout $ do
   categories <- lookupSession "categories"
   humanNames <- lookupSession "humanNames"
   countryNames <- lookupSession "countryNames"
+  companyNames <- lookupSession "companyNames"
   deleteSession "categories"
   deleteSession "humanNames"
+  deleteSession "countryNames"
+  deleteSession "companyNames"
   toWidget [lucius|
             body { margin:0.7cm 1cm 1cm 1cm; }
    |]
@@ -57,6 +60,8 @@ getHomeR = defaultLayout $ do
      <p>#{fromMaybe "" humanNames}
      <h4>Country names found in text:
      <p>#{fromMaybe "" countryNames}
+     <h4>Company names found in text:
+     <p>#{fromMaybe "" companyNames}
      <br>
      <br>
      <div>
@@ -74,8 +79,9 @@ postHomeR = do
     --setMessage $ toHtml $ T.pack $
     --  "Assigned tags from combined 1gram and 2gram analysis: " ++ (show $ bestCategories $ splitWords $ T.unpack name)
     setSession "categories" $ T.pack $ (show $ bestCategories $ splitWords $ T.unpack name)
-    setSession "humanNames" $ T.pack $ (show $ humanNames_s $ T.unpack name)
+    setSession "humanNames" $ T.pack $ (show $ humanNames $ T.unpack name)
     setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ T.unpack name)
+    setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ T.unpack name)
     redirectUltDest HomeR
     
 main :: IO ()

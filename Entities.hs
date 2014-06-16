@@ -1,4 +1,4 @@
-module Entities (humanNames, humanNames_s, countryNames) where
+module Entities (humanNames, countryNames, companyNames) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -14,6 +14,7 @@ import LastNames (lastNames)
 import NamePrefixes (namePrefixes)
 
 import CountryNames (countryNamesOneWord, countryNamesTwoWords, countryNamesThreeWords)
+import CompanyNames (companyNamesOneWord, companyNamesTwoWords, companyNamesThreeWords)
 
 filterTwoWordNames :: [[[Char]]] -> [[[Char]]]
 filterTwoWordNames bigramS =
@@ -25,14 +26,14 @@ filterThreeWordNames trigramS =
  
 xs `isSubsetOf` ys = all (`elem` ys) xs
     
-humanNames :: [Char] -> [[[Char]]]
-humanNames s =
+humanNamesAsTokens :: [Char] -> [[[Char]]]
+humanNamesAsTokens s =
   let bigramS = filterTwoWordNames $ bigram $ splitWordsKeepCase s; 
       trigramS = filterThreeWordNames $ trigram $ splitWordsKeepCase s in
   trigramS ++ filter (\b -> (length (filter (b `isSubsetOf`) trigramS)) == 0)  bigramS
 
-humanNames_s s =
-  map (\l -> concat $ intersperse " " $ l) $ humanNames s
+humanNames s =
+  map (\l -> concat $ intersperse " " $ l) $ humanNamesAsTokens s
   
 countryNames1W wrds =
   filter (\w -> S.member w countryNamesOneWord) wrds
@@ -49,14 +50,26 @@ countryNames wrds =
   sortBy (\x y -> compare x y) $
     countryNames1W wrds ++ countryNames2W wrds ++ countryNames3W wrds
   
+companyNames1W wrds =
+  filter (\w -> S.member w companyNamesOneWord) wrds
+  
+companyNames2W wrds =
+  let twograms = bigram_s wrds in
+  filter (\w -> S.member w companyNamesTwoWords) twograms
+  
+companyNames3W wrds =
+  let threegrams = trigram_s wrds in
+  filter (\w -> S.member w companyNamesThreeWords) threegrams
+
+companyNames wrds =
+  sortBy (\x y -> compare x y) $
+    companyNames1W wrds ++ companyNames2W wrds ++ companyNames3W wrds
+  
 main = do
-    let s = "The company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Buenos Aires, and the British Virgin Islands."
+    let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday."
     print $ humanNames s
-    print $ humanNames_s s
-    print $ countryNames1W $ splitWordsKeepCase s
-    print $ countryNames2W $ splitWordsKeepCase s
-    print $ countryNames3W $ splitWordsKeepCase s
     print $ countryNames $ splitWordsKeepCase s
+    print $ companyNames $ splitWordsKeepCase s
     
 
 
