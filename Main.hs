@@ -72,8 +72,8 @@ getHomeR = defaultLayout $ do
      <div>
        <p>Compared to previous versions written in Common Lisp, Scheme, Java, and Clojure the code is very compact. The current code size is:
          <ul>
-          <li>Yesod web app: 70 lines
-          <li>NLP code: 150 lines
+          <li>Yesod web app: 90 lines
+          <li>NLP code: 500 lines
        <p>
          <i>Copyright 2014 Mark Watson.
    |]
