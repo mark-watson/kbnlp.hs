@@ -1,6 +1,6 @@
 module Entities (humanNames, countryNames, companyNames) where
 
-import qualified Data.Map as M
+--import qualified Data.Map as M
 import qualified Data.Set as S
 import Data.Char (toLower)
 import Data.List (sortBy, intersect, intersperse)

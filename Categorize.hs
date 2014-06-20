@@ -6,6 +6,8 @@ import Data.List (sortBy)
 import Category1Gram (onegrams)
 import Category2Gram (twograms)
 
+import Sentence (segment)
+
 import Utils (splitWords, bigram, bigram_s)
 
 catnames1 = map fst onegrams
@@ -29,6 +31,7 @@ bestCategories1 wrds =
 bestCategories2 wrds =
   take 3 $ bestCategoriesHelper (bigram_s wrds) twograms catnames2
 
+bestCategories :: [[Char]] -> [([Char], Double)]
 bestCategories wrds =
   sortBy cmpScore $ M.toList $ M.unionWith (+) (M.fromList $ bestCategories1 wrds) ( M.fromList $ bestCategories2 wrds)
       
@@ -39,4 +42,3 @@ main = do
     print $ score (bigram_s (splitWords s)) twograms
     print $ bestCategories2 (splitWords s)
     print $ bestCategories (splitWords s)
-    
