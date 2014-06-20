@@ -13,6 +13,7 @@ import Utils (splitWordsKeepCase)
 
 import Categorize
 import Entities
+import Summarize
 
 data App = App
 
@@ -38,10 +39,12 @@ getHomeR = defaultLayout $ do
   humanNames <- lookupSession "humanNames"
   countryNames <- lookupSession "countryNames"
   companyNames <- lookupSession "companyNames"
+  summary <- lookupSession "summary"
   deleteSession "categories"
   deleteSession "humanNames"
   deleteSession "countryNames"
   deleteSession "companyNames"
+  deleteSession "summmary"
   toWidget [lucius|
             body { margin:0.7cm 1cm 1cm 1cm; }
    |]
@@ -62,6 +65,8 @@ getHomeR = defaultLayout $ do
      <p>#{fromMaybe "" countryNames}
      <h4>Company names found in text:
      <p>#{fromMaybe "" companyNames}
+     <h4>Summary of text:
+     <p>#{fromMaybe "" summary}
      <br>
      <br>
      <div>
@@ -82,6 +87,7 @@ postHomeR = do
     setSession "humanNames" $ T.pack $ (show $ humanNames $ T.unpack name)
     setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ T.unpack name)
     setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ T.unpack name)
+    setSession "summary" $ T.pack $ (show $ summarize $ T.unpack name)
     redirectUltDest HomeR
     
 main :: IO ()
