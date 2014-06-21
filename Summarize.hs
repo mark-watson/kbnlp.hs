@@ -18,27 +18,26 @@ safeLookup key alist =
     Just v -> v
     Nothing -> 0
  
-scoreSentenceHelper2 words catDataMaps bestCategories =
+scoreSentenceByBestCategories words catDataMaps bestCategories =
   map (\(category, aMap) -> 
         (category, (safeLookup category bestCategories) * 
                    (scoreSentenceHelper words aMap))) catDataMaps
 
-scoreSentenceHelper3 words catDataMaps bestCategories =  
-  foldl (+) 0 $ map (\(cat, val) -> val) $ scoreSentenceHelper2 words catDataMaps bestCategories
+scoreForSentence words catDataMaps bestCategories =  
+  foldl (+) 0 $ map (\(cat, val) -> val) $ scoreSentenceByBestCategories words catDataMaps bestCategories
 
 summarize s =
   let words = splitWords s;
       bestCats = bestCategories words;
       sentences = segment s;
-      results = map (\sentence -> (sentence, scoreSentenceHelper3 (splitWords sentence) onegrams bestCats)) sentences in
-  filter (\(sentence, score) -> score > 5) results
+      result1grams = map (\sentence -> (sentence, scoreForSentence (splitWords sentence) onegrams bestCats)) 
+                     sentences;
+      result2grams = map (\sentence ->
+                           (sentence, scoreForSentence (bigram_s (splitWords sentence)) twograms bestCats)) 
+                     sentences in
+  filter (\(sentence, score) -> score > 10) $
+  M.toList $ M.unionWith (+) (M.fromList result1grams) (M.fromList result1grams)
   
 main = do     
-  let s = "The sport of hocky is about 100 years old by ahdi dates. American Football is a newer sport. Programming is fun. Congress passed a new budget that might help the economy.";
-      sentences = segment s;
-      rankedCategories = bestCategories (splitWords s);
-      categoryNames = map (\(k, v) -> k) rankedCategories
+  let s = "The sport of hocky is about 100 years old by ahdi dates. American Football is a newer sport. Programming is fun. Congress passed a new budget that might help the economy."
   print $ summarize s
-  print rankedCategories
-  print categoryNames
-  print $ summarize "The acid reaction of the compound. The cat ran."
