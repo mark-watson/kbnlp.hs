@@ -27,7 +27,7 @@ results s = do
     filter (\x -> isInfixOf ": " x && length x < 40) (lines (replace "\r" "" ret))
   
 main = do
-  r <- results "Berlin Germany visited by George W. Bush to see IBM plant."
+  r <- results "Berlin Germany visited by George W. Bush to see IBM plant. Bush met with President Clinton."
   print $ r !! 0
   return r
   -- note: results are wrapped in a monad

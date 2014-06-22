@@ -5,6 +5,8 @@ module DBPedia where
 import Database.HSparql.Connection
 import Database.HSparql.QueryGenerator
 
+import Prelude as P
+
 import Data.RDF hiding (triple)
 import Data.RDF.TriplesGraph
 import Data.Text
@@ -17,13 +19,23 @@ simpleDescribe = do
     return DescribeQuery { queryDescribe = uri }
     
 
-main = do
+doit = do
   (rdfGraph:: TriplesGraph) <- describeQuery "http://dbpedia.org/sparql" simpleDescribe
   --mapM_ print (triplesOf rdfGraph)
   --print "\n\n\n"
   --print rdfGraph
-  mapM_ (\(Triple s p o) -> print [s, p, o])
-    (triplesOf rdfGraph)
-  
+  mapM (\(Triple s p o) -> 
+          case [s,p,o] of
+            [UNode(s), UNode(p), UNode(o)] -> return (s,p,o)
+            [UNode(s), UNode(p), LNode(PlainLL o2 l)] -> return (s,p,o2)
+            [UNode(s), UNode(p), LNode(TypedL o2 l)] -> return (s,p,o2)
+            _ -> return ("no match","no match","no match"))
 
-  
+    (triplesOf rdfGraph)
+
+          
+main = do
+  results <- doit
+  print $ results !! 0
+  mapM_ print results
+
