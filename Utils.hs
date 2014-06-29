@@ -1,6 +1,7 @@
-module Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s) where
+module Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s, removeDuplicates) where
 
 import Data.Char (toLower)
+import Data.Set (toList, fromList)
 
 splitWords :: String -> [String]
 splitWords = words . map (\c -> if elem c ".,;:!\n\t\"" then ' ' else toLower c)
@@ -23,3 +24,6 @@ trigram xs = take 3 xs : trigram (tail xs)
 
 trigram_s xs = [ (a !! 0) ++ " " ++ (a !! 1) ++ " " ++ (a !! 2) | a <- trigram xs] 
 
+ 
+removeDuplicates :: Ord a => [a] -> [a]
+removeDuplicates = toList . fromList

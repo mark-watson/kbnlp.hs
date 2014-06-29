@@ -17,7 +17,7 @@ scoreCat wrds amap =
   foldl (+) 0 $ map (\x ->  M.findWithDefault 0.0 x amap) wrds
 
 score wrds amap =
- filter (\(a, b) -> b > 0.25) $ zip [0..] $ map (\(s, m) -> scoreCat wrds m) amap
+ filter (\(a, b) -> b > 0.9) $ zip [0..] $ map (\(s, m) -> scoreCat wrds m) amap
  
 cmpScore (a1, b1) (a2, b2) = compare b2 b1
                               

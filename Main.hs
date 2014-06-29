@@ -49,8 +49,8 @@ getHomeR = defaultLayout $ do
             body { margin:0.7cm 1cm 1cm 1cm; }
    |]
   [whamlet|
-     <h2>This is a test of an initial port of KnowledgeBooks NLP code to Haskell
-     <h4>Enter plain text:
+     <h2>This is a test of an initial port of KnowledgeBooks Natural Language Processing (NLP) code to Haskell
+     <h4>Enter plain text (no special characters):
      <form method=post>
         <textarea type=text name=name rows="6" cols="70">
         <br>

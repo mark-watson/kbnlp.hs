@@ -7,7 +7,7 @@ import Data.List (sortBy, intersect, intersperse)
 
 import Data.List (sortBy)
 
-import Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s)
+import Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s, removeDuplicates)
 
 import FirstNames (firstNames)
 import LastNames (lastNames)
@@ -33,7 +33,7 @@ humanNamesAsTokens s =
   trigramS ++ filter (\b -> (length (filter (b `isSubsetOf`) trigramS)) == 0)  bigramS
 
 humanNames s =
-  map (\l -> concat $ intersperse " " $ l) $ humanNamesAsTokens s
+  removeDuplicates $ map (\l -> concat $ intersperse " " $ l) $ humanNamesAsTokens s
   
 countryNames1W wrds =
   filter (\w -> S.member w countryNamesOneWord) wrds
@@ -47,7 +47,7 @@ countryNames3W wrds =
   filter (\w -> S.member w countryNamesThreeWords) threegrams
 
 countryNames wrds =
-  sortBy (\x y -> compare x y) $
+  removeDuplicates $ sortBy (\x y -> compare x y) $
     countryNames1W wrds ++ countryNames2W wrds ++ countryNames3W wrds
   
 companyNames1W wrds =
@@ -62,7 +62,7 @@ companyNames3W wrds =
   filter (\w -> S.member w companyNamesThreeWords) threegrams
 
 companyNames wrds =
-  sortBy (\x y -> compare x y) $
+  removeDuplicates $ sortBy (\x y -> compare x y) $
     companyNames1W wrds ++ companyNames2W wrds ++ companyNames3W wrds
   
 main = do
