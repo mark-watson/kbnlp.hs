@@ -66,7 +66,7 @@ companyNames wrds =
     companyNames1W wrds ++ companyNames2W wrds ++ companyNames3W wrds
   
 main = do
-    let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday."
+    let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday. Brazil Brazil Brazil. John Smith John Smith."
     print $ humanNames s
     print $ countryNames $ splitWordsKeepCase s
     print $ companyNames $ splitWordsKeepCase s
