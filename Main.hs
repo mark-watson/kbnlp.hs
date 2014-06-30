@@ -40,11 +40,13 @@ getHomeR = defaultLayout $ do
   countryNames <- lookupSession "countryNames"
   companyNames <- lookupSession "companyNames"
   summary <- lookupSession "summary"
+  summary_s <- lookupSession "summary_s"
   deleteSession "categories"
   deleteSession "humanNames"
   deleteSession "countryNames"
   deleteSession "companyNames"
   deleteSession "summmary"
+  deleteSession "summmary_s"
   toWidget [lucius|
             body { margin:0.7cm 1cm 1cm 1cm; }
    |]
@@ -65,8 +67,10 @@ getHomeR = defaultLayout $ do
      <p>#{fromMaybe "" countryNames}
      <h4>Company names found in text:
      <p>#{fromMaybe "" companyNames}
-     <h4>Summary of text:
+     <h4>Summary of text, with scoring:
      <p>#{fromMaybe "" summary}
+     <h4>Summary of text:
+     <p>#{fromMaybe "" summary_s}
      <br>
      <br>
      <div>
@@ -88,6 +92,7 @@ postHomeR = do
     setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ T.unpack name)
     setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ T.unpack name)
     setSession "summary" $ T.pack $ (show $ summarize $ T.unpack name)
+    setSession "summary_s" $ T.pack $ (show $ summarize_s $ T.unpack name)
     redirectUltDest HomeR
     
 main :: IO ()

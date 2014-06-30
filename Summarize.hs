@@ -1,6 +1,7 @@
-module Summarize (summarize) where
+module Summarize (summarize, summarize_s) where
 
 import qualified Data.Map as M
+import Data.List.Utils (replace)
 
 import Categorize (bestCategories)
 import Sentence (segment)
@@ -38,6 +39,10 @@ summarize s =
   filter (\(sentence, score) -> score > 10) $
   M.toList $ M.unionWith (+) (M.fromList result1grams) (M.fromList result1grams)
   
+summarize_s s =
+  replace "\"" "'" $ concat $ map (\x -> (fst x) ++ " ") $ summarize s
+  
 main = do     
   let s = "The sport of hocky is about 100 years old by ahdi dates. American Football is a newer sport. Programming is fun. Congress passed a new budget that might help the economy."
   print $ summarize s
+  print $ summarize_s s
