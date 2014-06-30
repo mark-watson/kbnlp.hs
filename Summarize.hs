@@ -36,7 +36,7 @@ summarize s =
       result2grams = map (\sentence ->
                            (sentence, scoreForSentence (bigram_s (splitWords sentence)) twograms bestCats)) 
                      sentences in
-  filter (\(sentence, score) -> score > 10) $
+  filter (\(sentence, score) -> score > 200) $
   M.toList $ M.unionWith (+) (M.fromList result1grams) (M.fromList result1grams)
   
 summarize_s s =
