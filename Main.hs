@@ -61,6 +61,8 @@ getHomeR = defaultLayout $ do
         <br>
         <input type=submit value="Process text">
      <br>
+     <p>
+       <i>Note: if you don't see any results the cause is special characters (e.g., fancy quotes and other unicode characters) in the input text.
      <p>#{fromMaybe "" the_text}
      <h4>Summary of text:
      <p>#{fromMaybe "" summary_s}
