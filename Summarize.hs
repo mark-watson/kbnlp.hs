@@ -40,7 +40,7 @@ summarize s =
   M.toList $ M.unionWith (+) (M.fromList result1grams) (M.fromList result1grams)
   
 summarize_s s =
-  replace "\"" "'" $ concat $ map (\x -> (fst x) ++ " ") $ summarize s
+  init $ replace "\"" "'" $ concat $ map (\x -> (fst x) ++ " ") $ summarize s
   
 main = do     
   let s = "The sport of hocky is about 100 years old by ahdi dates. American Football is a newer sport. Programming is fun. Congress passed a new budget that might help the economy. The President signed the tax bill."
