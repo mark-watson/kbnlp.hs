@@ -8,12 +8,16 @@ import Yesod
 import qualified Data.Text as T
 import Text.Read (readMaybe)
 import Data.Maybe (fromMaybe)
+--import Control.Monad (liftM)
+--import Control.Monad.Exception.Synchronous (catch, runExceptionalT, Exceptional(Exception), Exceptional(Success))
 
+import System.IO (readLn)
 import Utils (splitWordsKeepCase)
 
 import Categorize
 import Entities
 import Summarize
+import OpenCalais
 
 data App = App
 
@@ -30,7 +34,6 @@ readSession :: Read a => T.Text -> Handler (Maybe a)
 readSession name = do
     textValue <- lookupSession name
     return (readMaybe . T.unpack =<< textValue)
-    
 
 getHomeR :: Handler Html
 getHomeR = defaultLayout $ do
@@ -41,13 +44,15 @@ getHomeR = defaultLayout $ do
   companyNames <- lookupSession "companyNames"
   summary <- lookupSession "summary"
   summary_s <- lookupSession "summary_s"
+  calais <- lookupSession "calais"
   the_text <- lookupSession "the_text"
   deleteSession "categories"
   deleteSession "humanNames"
   deleteSession "countryNames"
   deleteSession "companyNames"
-  deleteSession "summmary"
-  deleteSession "summmary_s"
+  deleteSession "summary"
+  deleteSession "summary_s"
+  deleteSession "calais"
   deleteSession "the_text"
   toWidget [lucius|
             body { margin:0.7cm 1cm 1cm 1cm; }
@@ -76,6 +81,8 @@ getHomeR = defaultLayout $ do
      <p>#{fromMaybe "" companyNames}
      <h4>Summary of text, with scoring:
      <p>#{fromMaybe "" summary}
+     <h4>Entities from calling the OpenCalais service:
+     <p>#{fromMaybe "" calais}
      <br>
      <br>
      <div>
@@ -90,13 +97,14 @@ getHomeR = defaultLayout $ do
 postHomeR :: Handler ()
 postHomeR = do
     name <- runInputPost $ ireq textField "name"
-    --setMessage $ toHtml $ T.pack $
-    --  "Assigned tags from combined 1gram and 2gram analysis: " ++ (show $ bestCategories $ splitWords $ T.unpack name)
+    calais <- lift $ calaisResults $ T.unpack name
+         
     setSession "categories" $ T.pack $ (show $ bestCategories $ splitWords $ T.unpack name)
     setSession "humanNames" $ T.pack $ (show $ humanNames $ T.unpack name)
     setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ T.unpack name)
     setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ T.unpack name)
     setSession "summary" $ T.pack $ (show $ summarize $ T.unpack name)
+    setSession "calais"  $ T.pack calais
     setSession "summary_s" $ T.pack $ (show $ summarize_s $ T.unpack name)
     setSession "the_text" name
     redirectUltDest HomeR
