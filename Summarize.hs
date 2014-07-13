@@ -40,9 +40,11 @@ summarize s =
   M.toList $ M.unionWith (+) (M.fromList result1grams) (M.fromList result1grams)
   
 summarize_s s =
-  init $ replace "\"" "'" $ concat $ map (\x -> (fst x) ++ " ") $ summarize s
+  let a = replace "\"" "'" $ concat $ map (\x -> (fst x) ++ " ") $ summarize s in
+  if length a > 0 then (init a) else safeFirst $ segment s where
+    safeFirst x = if length x > 0 then x !! 0 else ""
   
 main = do     
-  let s = "The sport of hocky is about 100 years old by ahdi dates. American Football is a newer sport. Programming is fun. Congress passed a new budget that might help the economy. The President signed the tax bill."
+  let s = "The U.N. Security Council called Saturday for a cease-fire in the Israeli-Palestinian conflict centered on the Gaza Strip. A council statement approved by all 15 members calls for de-escalation of the violence, restoration of calm, and a resumption of direct negotiations between Israelis and Palestinians aimed at achieving a comprehensive peace agreement based on a two-state solution. The statement calls for \"the reinstitution of the November 2012 cease-fire,\" which was brokered by Egypt, but gives no time frame for when it should take effect."
   print $ summarize s
   print $ summarize_s s

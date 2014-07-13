@@ -1,16 +1,12 @@
 {-# LANGUAGE ScopedTypeVariables,OverloadedStrings #-}
 
-module DBPedia where
+module Sparql2 where
 
 import Database.HSparql.Connection
 import Database.HSparql.QueryGenerator
 
-import Prelude as P
-
 import Data.RDF hiding (triple)
 import Data.RDF.TriplesGraph
-import Data.Text
-
 
 simpleDescribe :: Query DescribeQuery
 simpleDescribe = do
@@ -38,4 +34,5 @@ main = do
   results <- doit
   print $ results !! 0
   mapM_ print results
+  return results
 

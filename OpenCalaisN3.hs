@@ -19,7 +19,7 @@ calaisKey = getEnv "OPEN_CALAIS_KEY"
 
 escape s = urlEncode s
 
-baseParams = "<c:params xmlns:c=\"http://s.opencalais.com/1/pred/\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><c:processingDirectives c:contentType=\"text/txt\" c:outputFormat=\"xml/rdf\"></c:processingDirectives><c:userDirectives c:allowDistribution=\"true\" c:allowSearch=\"true\" c:externalID=\"17cabs901\" c:submitter=\"ABC\"></c:userDirectives><c:externalMetadata></c:externalMetadata></c:params>"
+baseParams = "<c:params xmlns:c=\"http://s.opencalais.com/1/pred/\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"><c:processingDirectives c:contentType=\"text/txt\" c:outputFormat=\"text/N3\"></c:processingDirectives><c:userDirectives c:allowDistribution=\"true\" c:allowSearch=\"true\" c:externalID=\"17cabs901\" c:submitter=\"ABC\"></c:userDirectives><c:externalMetadata></c:externalMetadata></c:params>"
 
 calaisResults s = do
   key <- calaisKey
@@ -27,12 +27,12 @@ calaisResults s = do
                 ++ key ++ "&content=" ++ (escape s) ++ "&paramsXML=" 
                 ++ (escape baseParams)
   ret <- simpleHTTP (getRequest baseUrl) >>= 
-    fmap (take 10000) . getResponseBody 
-  return $ map (\z -> splitOn ": " z) $
-    filter (\x -> isInfixOf ": " x && length x < 40)
-      (lines (replace "\r" "" ret))
+         fmap (take 10000) . getResponseBody 
+  return $ replace "&lt;" "<" $ replace "&gt;" ">" ret
   
 main = do
   r <- calaisResults "Berlin Germany visited by George W. Bush to see IBM plant. Bush met with President Clinton. Bush said “felt it important to step it up”"
-  print r
-  return r
+  putStr r
+
+-- useful API docs:  http://www.opencalais.com/documentation/calais-web-service-api/forming-api-calls/input-parameters
+

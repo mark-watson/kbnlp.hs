@@ -1,6 +1,6 @@
 {-# LANGUAGE ScopedTypeVariables,OverloadedStrings #-}
 
-module DBPedia where
+module Sparql1 where
 
 import Database.HSparql.Connection
 import Database.HSparql.QueryGenerator
@@ -28,6 +28,3 @@ main = do
   case s of
     Just a -> print $ Prelude.map (\[(Bound (LNode (PlainLL s lan)))] -> s) a
     Nothing -> print "nothing"
-  
-
-  
