@@ -12,7 +12,7 @@ import Data.Maybe (fromMaybe)
 --import Control.Monad.Exception.Synchronous (catch, runExceptionalT, Exceptional(Exception), Exceptional(Success))
 
 import System.IO (readLn)
-import Utils (splitWordsKeepCase)
+import Utils (splitWordsKeepCase, cleanText)
 
 import Categorize
 import Entities
@@ -97,13 +97,13 @@ postHomeR = do
     name <- runInputPost $ ireq textField "name"
     --calais <- lift $ calaisResults $ T.unpack name
          
-    setSession "categories" $ T.pack $ (show $ bestCategories $ splitWords $ T.unpack name)
-    setSession "humanNames" $ T.pack $ (show $ humanNames $ T.unpack name)
-    setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ T.unpack name)
-    setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ T.unpack name)
-    setSession "summary" $ T.pack $ (show $ summarize $ T.unpack name)
+    setSession "categories" $ T.pack $ (show $ bestCategories $ splitWords $ cleanText $ T.unpack name)
+    setSession "humanNames" $ T.pack $ (show $ humanNames $ cleanText $ T.unpack name)
+    setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "summary" $ T.pack $ (show $ summarize $ cleanText $ T.unpack name)
     --setSession "calais"  $ T.pack calais
-    setSession "summary_s" $ T.pack $ (show $ summarize_s $ T.unpack name)
+    setSession "summary_s" $ T.pack $ (show $ summarize_s $ cleanText $ T.unpack name)
     setSession "the_text" name
     redirectUltDest HomeR
     

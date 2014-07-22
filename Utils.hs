@@ -1,7 +1,10 @@
-module Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s, removeDuplicates) where
+module Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s, removeDuplicates, cleanText) where
 
 import Data.Char (toLower)
 import Data.Set (toList, fromList)
+import Data.String.Utils (replace)
+
+cleanText s = replace "“" "\"" $ replace "”" "\"" $ replace "’" "'" s
 
 splitWords :: String -> [String]
 splitWords = words . map (\c -> if elem c ".,;:!\n\t\"" then ' ' else toLower c)
