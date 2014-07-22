@@ -40,9 +40,9 @@ summarize s =
       c400 = filter (\(sentence, score) -> score > 400) mergedResults;
       c300 = filter (\(sentence, score) -> score > 300) mergedResults;
       c200 = filter (\(sentence, score) -> score > 200) mergedResults;
-      c100 = filter (\(sentence, score) -> score > 100) mergedResults in
-  if length c400 > 1 then c400 else if length c300 > 1 then c300 else if length c200 > 1 then c200 else if length c100 == 1 && c100 /= (safeFirst sentences) then (safeFirst sentences) ++ " " ++ c100 else c100 where
-    safeFirst x = if length x > 1 then x !! 0 ++ x !! 1 else if length x > 0 then x !! 0 else ""
+      c100 = filter (\(sentence, score) -> score > 100) mergedResults; 
+      c000 = mergedResults in
+  if length c400 > 1 then c400 else if length c300 > 1 then c300 else if length c200 > 1 then c200 else if length c100 > 0 then c100 else c000
                           
   
   
