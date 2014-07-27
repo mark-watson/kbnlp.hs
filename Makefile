@@ -1,3 +1,3 @@
 clean:
-	rm -f *.hi *.o
+	rm -f *.hi *.o *.dyn* WebApp
  
