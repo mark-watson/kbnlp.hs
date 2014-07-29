@@ -1,6 +1,6 @@
 module Entities (humanNames, countryNames, companyNames) where
 
---import qualified Data.Map as M
+import qualified Data.Map as M
 import qualified Data.Set as S
 import Data.Char (toLower)
 import Data.List (sortBy, intersect, intersperse)
@@ -13,8 +13,8 @@ import FirstNames (firstNames)
 import LastNames (lastNames)
 import NamePrefixes (namePrefixes)
 
-import CountryNames (countryNamesOneWord, countryNamesTwoWords, countryNamesThreeWords)
-import CompanyNames (companyNamesOneWord, companyNamesTwoWords, companyNamesThreeWords)
+import CountryNamesDbpedia (countryMap)
+import CompanyNamesDbpedia (companyMap)
 
 filterTwoWordNames :: [[[Char]]] -> [[[Char]]]
 filterTwoWordNames bigramS =
@@ -36,37 +36,63 @@ humanNames s =
   removeDuplicates $ map (\l -> concat $ intersperse " " $ l) $ humanNamesAsTokens s
   
 countryNames1W wrds =
-  filter (\w -> S.member w countryNamesOneWord) wrds
+  filter 
+    (\x -> case (x) of
+         (_, Just x) -> True
+         _ -> False) $
+    map (\w -> (w, M.lookup w countryMap)) wrds
   
 countryNames2W wrds =
   let twograms = bigram_s wrds in
-  filter (\w -> S.member w countryNamesTwoWords) twograms
-  
+  filter 
+    (\x -> case (x) of
+         (_, Just x) -> True
+         _ -> False) $
+    map (\w -> (w, M.lookup w countryMap)) twograms
+    
 countryNames3W wrds =
   let threegrams = trigram_s wrds in
-  filter (\w -> S.member w countryNamesThreeWords) threegrams
+  filter 
+    (\x -> case (x) of
+         (_, Just x) -> True
+         _ -> False) $
+    map (\w -> (w, M.lookup w countryMap)) threegrams
 
 countryNames wrds =
-  removeDuplicates $ sortBy (\x y -> compare x y) $
-    countryNames1W wrds ++ countryNames2W wrds ++ countryNames3W wrds
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              countryNames1W wrds ++ countryNames2W wrds ++ countryNames3W wrds in
+  map (\(s, Just u) -> (s, u)) cns
   
 companyNames1W wrds =
-  filter (\w -> S.member w companyNamesOneWord) wrds
+  filter 
+    (\x -> case (x) of
+         (_, Just x) -> True
+         _ -> False) $
+    map (\w -> (w, M.lookup w companyMap)) wrds  
   
 companyNames2W wrds =
   let twograms = bigram_s wrds in
-  filter (\w -> S.member w companyNamesTwoWords) twograms
-  
+  filter 
+    (\x -> case (x) of
+         (_, Just x) -> True
+         _ -> False) $
+    map (\w -> (w, M.lookup w countryMap)) twograms
+    
 companyNames3W wrds =
   let threegrams = trigram_s wrds in
-  filter (\w -> S.member w companyNamesThreeWords) threegrams
+  filter 
+    (\x -> case (x) of
+         (_, Just x) -> True
+         _ -> False) $
+    map (\w -> (w, M.lookup w countryMap)) threegrams
 
 companyNames wrds =
-  removeDuplicates $ sortBy (\x y -> compare x y) $
-    companyNames1W wrds ++ companyNames2W wrds ++ companyNames3W wrds
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              companyNames1W wrds ++ companyNames2W wrds ++ companyNames3W wrds in
+  map (\(s, Just u) -> (s, u)) cns
   
 main = do
-    let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday. Brazil Brazil Brazil. John Smith John Smith."
+    let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Canada, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday. Brazil Brazil Brazil. John Smith John Smith."
     print $ humanNames s
     print $ countryNames $ splitWordsKeepCase s
     print $ companyNames $ splitWordsKeepCase s
