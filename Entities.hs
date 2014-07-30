@@ -1,4 +1,4 @@
-module Entities (companyNames) where -- (humanNames, countryNames, companyNames) where
+module Entities (companyNames, peopleNames, countryNames) where -- (humanNames, countryNames, companyNames) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S

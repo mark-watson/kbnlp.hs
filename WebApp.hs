@@ -98,7 +98,7 @@ postHomeR = do
     --calais <- lift $ calaisResults $ T.unpack name
          
     setSession "categories" $ T.pack $ (show $ bestCategories $ splitWords $ cleanText $ T.unpack name)
-    setSession "humanNames" $ T.pack $ (show $ humanNames $ cleanText $ T.unpack name)
+    setSession "humanNames" $ T.pack $ (show $ peopleNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "summary" $ T.pack $ (show $ summarize $ cleanText $ T.unpack name)
