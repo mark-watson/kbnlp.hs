@@ -59,6 +59,7 @@ getHomeR = defaultLayout $ do
    |]
   [whamlet|
      <h2>This is a test of an initial port of KnowledgeBooks Natural Language Processing (NLP) code to Haskell
+     <p>This system attepts to resolve entity references to Wikipedia/DBPedia subject URIs.
      <h4>Enter plain text (no special characters):
      <form method=post>
         <textarea type=text name=name rows="6" cols="70">
@@ -86,8 +87,8 @@ getHomeR = defaultLayout $ do
      <div>
        <p>Compared to previous versions written in Common Lisp, Scheme, Java, and Clojure the code is very compact. The current code size is:
          <ul>
-          <li>Yesod web app: 90 lines
-          <li>NLP code: 500 lines
+          <li>Yesod web app: 110 lines
+          <li>NLP code: 550 lines
        <p>
          <i>Copyright 2014 Mark Watson.
    |]
