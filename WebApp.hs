@@ -59,7 +59,7 @@ getHomeR = defaultLayout $ do
    |]
   [whamlet|
      <h2>This is a test of an initial port of KnowledgeBooks Natural Language Processing (NLP) code to Haskell
-     <p>This system attepts to resolve entity references to Wikipedia/DBPedia subject URIs.
+     <p>This system attempts to resolve entity references to Wikipedia/DBPedia subject URIs.
      <h4>Enter plain text (no special characters):
      <form method=post>
         <textarea type=text name=name rows="6" cols="70">
