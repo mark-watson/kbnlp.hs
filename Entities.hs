@@ -1,4 +1,4 @@
-module Entities (companyNames, peopleNames, countryNames) where -- (humanNames, countryNames, companyNames) where
+module Entities (companyNames, peopleNames, countryNames, cityNames) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -20,8 +20,7 @@ import CountryNames (countryNamesOneWord, countryNamesTwoWords, countryNamesThre
 
 import CompanyNamesDbpedia (companyMap)
 import CompanyNames (companyNamesOneWord, companyNamesTwoWords, companyNamesThreeWords)
-
---  ...
+import CityNamesDbpedia (cityMap)
  
 xs `isSubsetOf` ys = all (`elem` ys) xs
     
@@ -103,12 +102,25 @@ peopleNames wrds =
   map (\(s, Just (a,Just b)) -> (a,b)) cns
 
 
+cityNames1W wrds = helperNames1W wrds cityMap Data.Set.empty
+  
+cityNames2W wrds = helperNames2W wrds cityMap Data.Set.empty
+
+cityNames3W wrds = helperNames3W wrds cityMap Data.Set.empty
+
+cityNames wrds =
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              cityNames1W wrds ++ cityNames2W wrds ++ cityNames3W wrds in
+  map (\(s, Just (a,Just b)) -> (a,b)) cns
+
+
 main = do
     let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Canada, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday. Brazil Brazil Brazil. John Smith bought stock in ConocoPhillips, Heinz, Hasbro, and General Motors"
     --print $ humanNames s
     print $ peopleNames $ splitWordsKeepCase s
     print $ countryNames $ splitWordsKeepCase s
     print $ companyNames $ splitWordsKeepCase s
+    print $ cityNames $ splitWordsKeepCase s
     
 
 

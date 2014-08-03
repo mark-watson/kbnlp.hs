@@ -41,6 +41,7 @@ getHomeR = defaultLayout $ do
   categories <- lookupSession "categories"
   humanNames <- lookupSession "humanNames"
   countryNames <- lookupSession "countryNames"
+  cityNames <- lookupSession "cityNames"
   companyNames <- lookupSession "companyNames"
   summary <- lookupSession "summary"
   summary_s <- lookupSession "summary_s"
@@ -49,6 +50,7 @@ getHomeR = defaultLayout $ do
   deleteSession "categories"
   deleteSession "humanNames"
   deleteSession "countryNames"
+  deleteSession "cityNames"
   deleteSession "companyNames"
   deleteSession "summary"
   deleteSession "summary_s"
@@ -78,6 +80,8 @@ getHomeR = defaultLayout $ do
      <p>#{fromMaybe "" humanNames}
      <h4>Country names found in text:
      <p>#{fromMaybe "" countryNames}
+     <h4>City names found in text:
+     <p>#{fromMaybe "" cityNames}
      <h4>Company names found in text:
      <p>#{fromMaybe "" companyNames}
      <h4>Summary of text, with scoring:
@@ -101,6 +105,7 @@ postHomeR = do
     setSession "categories" $ T.pack $ (show $ bestCategories $ splitWords $ cleanText $ T.unpack name)
     setSession "humanNames" $ T.pack $ (show $ peopleNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "cityNames" $ T.pack $ (show $ cityNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "summary" $ T.pack $ (show $ summarize $ cleanText $ T.unpack name)
     --setSession "calais"  $ T.pack calais
