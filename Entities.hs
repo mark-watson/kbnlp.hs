@@ -1,4 +1,5 @@
-module Entities (companyNames, peopleNames, countryNames, cityNames) where
+module Entities (companyNames, peopleNames, countryNames, cityNames, broadcastNetworkNames,
+                 musicGroupNames, politicalPartyNames, tradeUnionNames, universityNames) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -22,6 +23,12 @@ import CompanyNamesDbpedia (companyMap)
 import CompanyNames (companyNamesOneWord, companyNamesTwoWords, companyNamesThreeWords)
 import CityNamesDbpedia (cityMap)
  
+import BroadcastNetworkNamesDbPedia (broadcastNetworkMap)
+import MusicGroupNamesDbPedia (musicGroupMap)
+import PoliticalPartyNamesDbPedia (politicalPartyMap)
+import TradeUnionNamesDbPedia (tradeUnionMap)
+import UniversityNamesDbPedia (universityMap)
+
 xs `isSubsetOf` ys = all (`elem` ys) xs
     
   
@@ -114,13 +121,78 @@ cityNames wrds =
   map (\(s, Just (a,Just b)) -> (a,b)) cns
 
 
+
+broadcastNetworkNames1W wrds = helperNames1W wrds broadcastNetworkMap Data.Set.empty
+  
+broadcastNetworkNames2W wrds = helperNames2W wrds broadcastNetworkMap Data.Set.empty
+
+broadcastNetworkNames3W wrds = helperNames3W wrds broadcastNetworkMap Data.Set.empty
+
+broadcastNetworkNames wrds =
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              broadcastNetworkNames1W wrds ++ broadcastNetworkNames2W wrds ++ broadcastNetworkNames3W wrds in
+  map (\(s, Just (a,Just b)) -> (a,b)) cns
+
+
+musicGroupNames1W wrds = helperNames1W wrds musicGroupMap Data.Set.empty
+  
+musicGroupNames2W wrds = helperNames2W wrds musicGroupMap Data.Set.empty
+
+musicGroupNames3W wrds = helperNames3W wrds musicGroupMap Data.Set.empty
+
+musicGroupNames wrds =
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              musicGroupNames1W wrds ++ musicGroupNames2W wrds ++ musicGroupNames3W wrds in
+  map (\(s, Just (a,Just b)) -> (a,b)) cns
+
+
+politicalPartyNames1W wrds = helperNames1W wrds politicalPartyMap Data.Set.empty
+  
+politicalPartyNames2W wrds = helperNames2W wrds politicalPartyMap Data.Set.empty
+
+politicalPartyNames3W wrds = helperNames3W wrds politicalPartyMap Data.Set.empty
+
+politicalPartyNames wrds =
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              politicalPartyNames1W wrds ++ politicalPartyNames2W wrds ++ politicalPartyNames3W wrds in
+  map (\(s, Just (a,Just b)) -> (a,b)) cns
+
+
+tradeUnionNames1W wrds = helperNames1W wrds tradeUnionMap Data.Set.empty
+  
+tradeUnionNames2W wrds = helperNames2W wrds tradeUnionMap Data.Set.empty
+
+tradeUnionNames3W wrds = helperNames3W wrds tradeUnionMap Data.Set.empty
+
+tradeUnionNames wrds =
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              tradeUnionNames1W wrds ++ tradeUnionNames2W wrds ++ tradeUnionNames3W wrds in
+  map (\(s, Just (a,Just b)) -> (a,b)) cns
+
+universityNames1W wrds = helperNames1W wrds universityMap Data.Set.empty
+  
+universityNames2W wrds = helperNames2W wrds universityMap Data.Set.empty
+
+universityNames3W wrds = helperNames3W wrds universityMap Data.Set.empty
+
+universityNames wrds =
+  let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
+              universityNames1W wrds ++ universityNames2W wrds ++ universityNames3W wrds in
+  map (\(s, Just (a,Just b)) -> (a,b)) cns
+
+
 main = do
-    let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Canada, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday. Brazil Brazil Brazil. John Smith bought stock in ConocoPhillips, Heinz, Hasbro, and General Motors"
+    let s = "As read in the San Francisco Chronicle, the company is owned by John Smith, Betty Sanders, and Dr. Ben Jones. Ben Jones and Mr. John Smith are childhood friends who grew up in Brazil, Canada, Buenos Aires, and the British Virgin Islands. Apple Computer relased a new version of OS X yesterday. Brazil Brazil Brazil. John Smith bought stock in ConocoPhillips, Heinz, Hasbro, and General Motors, Fox Sports Radio. I listen to B J Cole. Awami National Party is a political party. ALAEA is a trade union. She went to Brandeis University."
     --print $ humanNames s
     print $ peopleNames $ splitWordsKeepCase s
     print $ countryNames $ splitWordsKeepCase s
     print $ companyNames $ splitWordsKeepCase s
     print $ cityNames $ splitWordsKeepCase s
+    print $ broadcastNetworkNames $ splitWordsKeepCase s
+    print $ musicGroupNames $ splitWordsKeepCase s
+    print $ politicalPartyNames $ splitWordsKeepCase s
+    print $ tradeUnionNames $ splitWordsKeepCase s
+    print $ universityNames $ splitWordsKeepCase s
     
 
 

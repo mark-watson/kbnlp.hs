@@ -43,6 +43,11 @@ getHomeR = defaultLayout $ do
   countryNames <- lookupSession "countryNames"
   cityNames <- lookupSession "cityNames"
   companyNames <- lookupSession "companyNames"
+  broadcastNetworkNames <- lookupSession "broadcastNetworkNames"
+  musicGroupNames <- lookupSession "musicGroupNames"
+  politicalPartyNames <- lookupSession "politicalPartyNames"
+  tradeUnionNames <- lookupSession "tradeUnionNames"
+  universityNames <- lookupSession "universityNames"
   summary <- lookupSession "summary"
   summary_s <- lookupSession "summary_s"
   --calais <- lookupSession "calais"
@@ -52,6 +57,11 @@ getHomeR = defaultLayout $ do
   deleteSession "countryNames"
   deleteSession "cityNames"
   deleteSession "companyNames"
+  deleteSession "broadcastNetworkNames"
+  deleteSession "musicGroupNames"
+  deleteSession "politicalPartyNames"
+  deleteSession "tradeUnionNames"
+  deleteSession "universityNames"
   deleteSession "summary"
   deleteSession "summary_s"
   --deleteSession "calais"
@@ -84,6 +94,16 @@ getHomeR = defaultLayout $ do
      <p>#{fromMaybe "" cityNames}
      <h4>Company names found in text:
      <p>#{fromMaybe "" companyNames}
+     <h4>Braodcast network names found in text:
+     <p>#{fromMaybe "" broadcastNetworkNames}
+     <h4>Music group names found in text:
+     <p>#{fromMaybe "" musicGroupNames}
+     <h4>Political party names found in text:
+     <p>#{fromMaybe "" politicalPartyNames}
+     <h4>Trade union names found in text:
+     <p>#{fromMaybe "" tradeUnionNames}
+     <h4>University names found in text:
+     <p>#{fromMaybe "" universityNames}
      <h4>Summary of text, with scoring:
      <p>#{fromMaybe "" summary}
      <br>
@@ -107,6 +127,11 @@ postHomeR = do
     setSession "countryNames" $ T.pack $ (show $ countryNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "cityNames" $ T.pack $ (show $ cityNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "companyNames" $ T.pack $ (show $ companyNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "broadcastNetworkNames" $ T.pack $ (show $ broadcastNetworkNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "musicGroupNames" $ T.pack $ (show $ musicGroupNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "politicalPartyNames" $ T.pack $ (show $ politicalPartyNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "tradeUnionNames" $ T.pack $ (show $ tradeUnionNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
+    setSession "universityNames" $ T.pack $ (show $ universityNames $ splitWordsKeepCase $ cleanText $ T.unpack name)
     setSession "summary" $ T.pack $ (show $ summarize $ cleanText $ T.unpack name)
     --setSession "calais"  $ T.pack calais
     setSession "summary_s" $ T.pack $ (show $ summarize_s $ cleanText $ T.unpack name)
