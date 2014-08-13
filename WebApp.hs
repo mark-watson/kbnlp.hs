@@ -10,6 +10,7 @@ import Text.Read (readMaybe)
 import Data.Maybe (fromMaybe)
 --import Control.Monad (liftM)
 --import Control.Monad.Exception.Synchronous (catch, runExceptionalT, Exceptional(Exception), Exceptional(Success))
+import Yesod.Core.Types (Logger)
 
 import System.IO (readLn)
 import Utils (splitWordsKeepCase, cleanText)
