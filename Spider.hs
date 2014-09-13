@@ -1,5 +1,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 
+-- experiments with web spidering
+
 module Spider where                    
 
 import Network.Curl.Download

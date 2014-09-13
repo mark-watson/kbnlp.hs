@@ -1,4 +1,8 @@
+-- Copyright 2014 by Mark Watson. All rights reserved. The software and data in this project can be used under the terms of the AGPL version 3 license.
+
 {-# LANGUAGE ScopedTypeVariables,OverloadedStrings #-}
+
+-- this is a throw away file. I was just learning how to combine results from Open Calais and a sample SPARQL client.
 
 module Combo where
 

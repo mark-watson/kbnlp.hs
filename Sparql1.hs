@@ -1,5 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables,OverloadedStrings #-}
 
+-- simple experiments with the excellent HSparql library
+
 module Sparql1 where
 
 import Database.HSparql.Connection

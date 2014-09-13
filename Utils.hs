@@ -1,3 +1,5 @@
+-- Copyright 2014 by Mark Watson. All rights reserved. The software and data in this project can be used under the terms of the AGPL version 3 license.
+
 module Utils (splitWords, bigram, bigram_s, splitWordsKeepCase, trigram, trigram_s, removeDuplicates, cleanText) where
 
 import Data.Char (toLower)
