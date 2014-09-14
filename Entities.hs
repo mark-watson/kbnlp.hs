@@ -33,47 +33,25 @@ import UniversityNamesDbPedia (universityMap)
 
 xs `isSubsetOf` ys = all (`elem` ys) xs
     
-  
-helperNames1W wrds dbPediaMap wordMap =
+namesHelper ngrams dbPediaMap wordMap =
   filter 
     (\x -> case (x) of
          (_, Just x) -> True
          _ -> False) $
-    map (\w -> (w,
-                let v = M.lookup w dbPediaMap in
+    map (\ngram -> (ngram,
+                let v = M.lookup ngram dbPediaMap in
                 if v /= Nothing
-                   then return (w, v)
-                   else if (S.member w wordMap)
-                           then Just (w, Just "")
-                           else Nothing)) wrds    
+                   then return (ngram, v)
+                   else if (S.member ngram wordMap)
+                           then Just (ngram, Just "")
+                           else Nothing)) ngrams   
 
-helperNames2W wrds dbPediaMap wordMap =
-  let twograms = bigram_s wrds in
-  filter 
-    (\x -> case (x) of
-         (_, Just x) -> True
-         _ -> False) $
-    map (\w -> (w,
-                let v = M.lookup w dbPediaMap in
-                if v /= Nothing
-                   then return (w, v)
-                   else if (S.member w wordMap)
-                           then Just (w, Just "")
-                           else Nothing)) twograms    
+helperNames1W wrds dbPediaMap wordMap = namesHelper wrds dbPediaMap wordMap
+
+helperNames2W wrds dbPediaMap wordMap = namesHelper (bigram_s wrds) dbPediaMap wordMap
     
-helperNames3W wrds dbPediaMap wordMap =
-  let threegrams = trigram_s wrds in
-  filter 
-    (\x -> case (x) of
-         (_, Just x) -> True
-         _ -> False) $
-    map (\w -> (w,
-                let v = M.lookup w dbPediaMap in
-                if v /= Nothing
-                   then return (w, v)
-                   else if (S.member w wordMap)
-                           then Just (w, Just "")
-                           else Nothing)) threegrams    
+helperNames3W wrds dbPediaMap wordMap =  namesHelper (trigram_s wrds) dbPediaMap wordMap
+
 
 companyNames1W wrds = helperNames1W wrds companyMap companyNamesOneWord
   
