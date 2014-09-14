@@ -52,112 +52,67 @@ helperNames2W wrds dbPediaMap wordMap = namesHelper (bigram_s wrds) dbPediaMap w
     
 helperNames3W wrds dbPediaMap wordMap =  namesHelper (trigram_s wrds) dbPediaMap wordMap
 
-
-companyNames1W wrds = helperNames1W wrds companyMap companyNamesOneWord
-  
-companyNames2W wrds = helperNames2W wrds companyMap companyNamesTwoWords
-
-companyNames3W wrds = helperNames3W wrds companyMap companyNamesThreeWords
-
 companyNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              companyNames1W wrds ++ companyNames2W wrds ++ companyNames3W wrds in
+              (helperNames1W wrds companyMap companyNamesOneWord) ++
+              (helperNames2W wrds companyMap companyNamesTwoWords) ++
+              (helperNames3W wrds companyMap companyNamesThreeWords) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
   
-
-countryNames1W wrds = helperNames1W wrds countryMap countryNamesOneWord
-  
-countryNames2W wrds = helperNames2W wrds countryMap countryNamesTwoWords
-
-countryNames3W wrds = helperNames3W wrds countryMap countryNamesThreeWords
-
 countryNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              countryNames1W wrds ++ countryNames2W wrds ++ countryNames3W wrds in
+              (helperNames1W wrds countryMap countryNamesOneWord) ++
+              (helperNames2W wrds countryMap countryNamesTwoWords) ++
+              (helperNames3W wrds countryMap countryNamesThreeWords) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
-
-
-peopleNames1W wrds = helperNames1W wrds peopleMap Data.Set.empty
-  
-peopleNames2W wrds = helperNames2W wrds peopleMap Data.Set.empty
-
-peopleNames3W wrds = helperNames3W wrds peopleMap Data.Set.empty
 
 peopleNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              peopleNames1W wrds ++ peopleNames2W wrds ++ peopleNames3W wrds in
+              (helperNames1W wrds peopleMap Data.Set.empty) ++
+              (helperNames2W wrds peopleMap Data.Set.empty) ++
+              (helperNames3W wrds peopleMap Data.Set.empty) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
-
-
-cityNames1W wrds = helperNames1W wrds cityMap Data.Set.empty
-  
-cityNames2W wrds = helperNames2W wrds cityMap Data.Set.empty
-
-cityNames3W wrds = helperNames3W wrds cityMap Data.Set.empty
 
 cityNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              cityNames1W wrds ++ cityNames2W wrds ++ cityNames3W wrds in
+              (helperNames1W wrds cityMap Data.Set.empty) ++
+              (helperNames2W wrds cityMap Data.Set.empty) ++
+              (helperNames3W wrds cityMap Data.Set.empty) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
-
-
-
-broadcastNetworkNames1W wrds = helperNames1W wrds broadcastNetworkMap Data.Set.empty
-  
-broadcastNetworkNames2W wrds = helperNames2W wrds broadcastNetworkMap Data.Set.empty
-
-broadcastNetworkNames3W wrds = helperNames3W wrds broadcastNetworkMap Data.Set.empty
 
 broadcastNetworkNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              broadcastNetworkNames1W wrds ++ broadcastNetworkNames2W wrds ++ broadcastNetworkNames3W wrds in
+              (helperNames1W wrds broadcastNetworkMap Data.Set.empty) ++
+              (helperNames2W wrds broadcastNetworkMap Data.Set.empty) ++
+              (helperNames3W wrds broadcastNetworkMap Data.Set.empty) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
-
-
-musicGroupNames1W wrds = helperNames1W wrds musicGroupMap Data.Set.empty
-  
-musicGroupNames2W wrds = helperNames2W wrds musicGroupMap Data.Set.empty
-
-musicGroupNames3W wrds = helperNames3W wrds musicGroupMap Data.Set.empty
 
 musicGroupNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              musicGroupNames1W wrds ++ musicGroupNames2W wrds ++ musicGroupNames3W wrds in
+              (helperNames1W wrds musicGroupMap Data.Set.empty) ++
+              (helperNames2W wrds musicGroupMap Data.Set.empty) ++
+              (helperNames3W wrds musicGroupMap Data.Set.empty) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
-
-
-politicalPartyNames1W wrds = helperNames1W wrds politicalPartyMap Data.Set.empty
-  
-politicalPartyNames2W wrds = helperNames2W wrds politicalPartyMap Data.Set.empty
-
-politicalPartyNames3W wrds = helperNames3W wrds politicalPartyMap Data.Set.empty
 
 politicalPartyNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              politicalPartyNames1W wrds ++ politicalPartyNames2W wrds ++ politicalPartyNames3W wrds in
+              (helperNames1W wrds politicalPartyMap Data.Set.empty) ++
+              (helperNames2W wrds politicalPartyMap Data.Set.empty) ++
+              (helperNames3W wrds politicalPartyMap Data.Set.empty) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
-
-
-tradeUnionNames1W wrds = helperNames1W wrds tradeUnionMap Data.Set.empty
-  
-tradeUnionNames2W wrds = helperNames2W wrds tradeUnionMap Data.Set.empty
-
-tradeUnionNames3W wrds = helperNames3W wrds tradeUnionMap Data.Set.empty
 
 tradeUnionNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              tradeUnionNames1W wrds ++ tradeUnionNames2W wrds ++ tradeUnionNames3W wrds in
+              (helperNames1W wrds tradeUnionMap Data.Set.empty) ++
+              (helperNames2W wrds tradeUnionMap Data.Set.empty) ++
+              (helperNames3W wrds tradeUnionMap Data.Set.empty) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
-
-universityNames1W wrds = helperNames1W wrds universityMap Data.Set.empty
-  
-universityNames2W wrds = helperNames2W wrds universityMap Data.Set.empty
-
-universityNames3W wrds = helperNames3W wrds universityMap Data.Set.empty
 
 universityNames wrds =
   let cns = removeDuplicates $ sortBy (\x y -> compare x y) $
-              universityNames1W wrds ++ universityNames2W wrds ++ universityNames3W wrds in
+             (helperNames1W wrds universityMap Data.Set.empty) ++
+             (helperNames2W wrds universityMap Data.Set.empty) ++
+             (helperNames3W wrds universityMap Data.Set.empty) in
   map (\(s, Just (a,Just b)) -> (a,b)) cns
 
 
