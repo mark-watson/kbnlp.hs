@@ -3,20 +3,14 @@ kbnlp.hs
 
 Mark Watson's Haskell NLP Experiments
 
-Copyright 2014 by Mark Watson. All rights reserved. The software and data in this project can be used under the terms of the GPL version 3 license.
+Copyright 2014 by Mark Watson. All rights reserved. 
+
+License: AGPL version 3 license. (Note: I own the copyright of all of the code in this project; contact me if you need a commercial license.)
 
 This project also includes some experiments using Haskell for SPARQL clients.
 
 I am currently working on using, when possible, DBPedia URIs as identifiers for entities detected in text. As is much of this project, this is a work in progress.
 
-## Git pull requests welcome!
-
-While I have 30+ years of professional Lisp experience, I am still getting up to speed on using Haskell. So far this has been a 4 year (very much part time) process.
-
-I would very much appreciate git pull requests for:
-
-- Improving my Haskell code
-- Fixing bugs in the NLP code and suggested improvements
 
 ## Credits
 
