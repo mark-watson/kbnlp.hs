@@ -15,7 +15,7 @@ cabal-version:       >=1.10
 executable nlpdemo
   ghc-options:         
   hs-source-dirs:      .
-  main-is:             Categorize.hs
-  build-depends:       haskell2010, containers, MissingH, yesod, json, encoding, split, download-curl, HTTP, text, transformers, tagsoup
+  main-is:             WebApp.hs
+  build-depends:       haskell2010, containers, MissingH, yesod, yesod-core, json, encoding, split, download-curl, HTTP, text, transformers, tagsoup
   default-language:    Haskell2010
   
