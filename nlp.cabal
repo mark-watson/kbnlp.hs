@@ -1,4 +1,4 @@
-name:                nlpdemo
+name:                nlp
 version:             0.1.0.0
 synopsis:            Natural Language Processing
 description:         NLP experiments
@@ -16,6 +16,6 @@ executable nlpdemo
   ghc-options:         
   hs-source-dirs:      .
   main-is:             WebApp.hs
-  build-depends:       haskell2010, containers, MissingH, yesod, yesod-core, json, encoding, split, download-curl, HTTP, text, transformers, tagsoup
+  build-depends:       base > 4.8, containers, MissingH, yesod, yesod-core, json, encoding, split, HTTP, text, transformers
   default-language:    Haskell2010
   

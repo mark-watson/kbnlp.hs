@@ -1,0 +1,5 @@
+extra-deps: [download-curl-0.1.4,encoding-0.8,haskell2010-1.1.2.0]
+resolver: nightly-2015-09-11
+flags: {}
+packages:
+- '.'
