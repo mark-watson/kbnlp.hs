@@ -5,9 +5,15 @@ Mark Watson's Haskell NLP Experiments
 
 Copyright 2014 by Mark Watson. All rights reserved. 
 
+
 License: AGPL version 3 license. (Note: I own the copyright of all of the code in this project; contact me if you need a commercial license.)
 
 I am currently working on using, when possible, DBPedia URIs as identifiers for entities detected in text. As is much of this project, this is a work in progress.
+
+## Note: this project is no longer supported - see newer version in code for my Haskell book
+
+Please use the code in the NlpTool directory at https://github.com/mark-watson/haskell_tutorial_cookbook_examples
+
 
 
 ## Credits
